@@ -1,9 +1,21 @@
-import React from 'react'
+import RecipeDetailsItem from "@/components/recipe-detailsitem"
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+async function detailsFetching(currentDetailsId){
+    try{
+        const apiResponce=await fetch(`https://dummyjson.com/recipes/${currentDetailsId}`)
+        const data = await apiResponce.json()
+        return data
+    }catch(e){
+        throw new Error(e)
+    }
 }
 
-export default page
+export default async function recipeDetails ({params}){
+
+    console.log(params)
+    const recipedetails = await detailsFetching(params?.details)
+
+
+
+    return <RecipeDetailsItem recipedetails={recipedetails}/>
+}
